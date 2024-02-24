@@ -1,83 +1,18 @@
-import React, { useState } from 'react';
-import MovieList from './components/MovieList'; // Supposons que vous avez également un composant MovieList pour afficher les films
-import Filter from './components/Filter';
-import movies from './components/Movie';
-import 'bootstrap/dist/css/bootstrap.min.css';
+// App.js
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Description from './components/Description';
+import Home from './pages/Home';
 
 
 const App = () => {
-  const [searchWord, setSearchWord] = useState('');
-  const [rate, setRate] = useState('');
-  const [film, setFilm] = useState({
-    title: '',
-    description: '',
-    rating: '',
-    posterURL: ''
-  });
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (film.title && film.description && film.rating && film.posterURL) {
-      setMovieList([...movieList, film]);
-      setFilm({
-        title: '',
-        description: '',
-        rating: '',
-        posterURL: ''
-      });
-    }
-  };
-
-  const [movieList, setMovieList] = useState(movies);
-
   return (
-    <div>
-      <Filter setRate={setRate} setSearchWord={setSearchWord} />
-      {console.log(searchWord)}
-
-      <form onSubmit={handleSubmit} >
-        <h4>ADD A MOVIE</h4>
-        <div><input
-          type='text'
-          value={film.title}
-          onChange={(e) => setFilm({ ...film, title: e.target.value })}
-          placeholder="Title"
-        />
-        </div>
-        <div>
-        <input
-          type='text'
-          value={film.description}
-          onChange={(e) => setFilm({ ...film, description: e.target.value })}
-          placeholder="Description"
-        />
-        </div>
-        <div>
-        <input
-          type='text'
-          value={film.rating}
-          onChange={(e) => setFilm({ ...film, rating: e.target.value })}
-          placeholder="Rating"
-        />
-        </div>
-        <div>
-        <input
-          type='text'
-          value={film.posterURL}
-          onChange={(e) => setFilm({ ...film, posterURL: e.target.value })}
-          placeholder="Poster URL"
-        />
-        </div>
-        <div>
-        <button type="submit">Add Movie</button>
-        </div>
-      </form>
-
-      <MovieList movies={searchWord !== "" ?
-        movieList.filter(e => e.title.toLowerCase().includes(searchWord.toLocaleLowerCase()))
-        : rate !== "" ? movieList.filter(e => e.rating == rate)
-          : movieList} />
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/d" element={<Description/>} />
+        <Route path="/" element={<Home/>} />
+      </Routes>
+    </Router>
   );
 };
 
